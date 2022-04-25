@@ -1,16 +1,40 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+@layer base {
+  @font-face {
+    font-family: "Chivo";
+    font-style: black;
+    font-weight: 900;
+    src: local(""),
+      url("../public/fonts/chivo/Chivo-Black.ttf") format("TrueType");
+  }
 
-* {
-  box-sizing: border-box;
+  @font-face {
+    font-family: "Commisioner";
+    font-style: normal;
+    font-weight: 400;
+    src: local(""),
+      url("../public/fonts/commisioner/static/Commissioner-Regular.ttf")
+        format("TrueType");
+  }
+
+  @font-face {
+    font-family: "Commisioner";
+    font-style: medium;
+    font-weight: 500;
+    src: local(""),
+      url("../public/fonts/commisioner/static/Commissioner-Medium.ttf")
+        format("TrueType");
+  }
+
+  @font-face {
+    font-family: "Commisioner";
+    font-style: bold;
+    font-weight: 700;
+    src: local(""),
+      url("../public/fonts/commisioner/static/Commissioner-Bold.ttf")
+        format("TrueType");
+  }
 }
