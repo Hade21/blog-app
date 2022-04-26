@@ -22,6 +22,7 @@ class Login extends React.Component<WithRouterProps> {
     event.preventDefault();
     const { data, status } = await loginUser(email, password);
     this.setState({ status: status });
+    sessionStorage.setItem("token", data.success.token);
     console.log(data, status);
   };
 

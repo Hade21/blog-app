@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { useEffect, useState } from "react";
 import CardWrapper from "../components/categories/cardWrapper";
+import RouteToLogin from "../components/categories/routeToLogin";
 
 const Home: NextPage = () => {
   const [token, setToken] = useState("");
@@ -13,7 +14,7 @@ const Home: NextPage = () => {
     function assign() {
       if (typeof window !== undefined) {
         setToken(sessionStorage.getItem("token"));
-        if (token !== undefined) {
+        if (token !== undefined || token !== "") {
           setIsLogin(true);
         }
       }
@@ -31,7 +32,7 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Welcome to Nine Dragon Labs Blog</h1>
-        <CardWrapper />
+        {isLogin ? <CardWrapper /> : <RouteToLogin />}
       </main>
 
       <footer className={styles.footer}>
