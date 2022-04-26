@@ -7,14 +7,15 @@ import CardWrapper from "../components/categories/cardWrapper";
 import RouteToLogin from "../components/categories/routeToLogin";
 
 const Home: NextPage = () => {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState("token");
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
     function assign() {
       if (typeof window !== undefined) {
         setToken(sessionStorage.getItem("token"));
-        if (token !== undefined || token !== "") {
+        if (sessionStorage.getItem("token") !== null) {
+          console.log(token);
           setIsLogin(true);
         }
       }
@@ -32,7 +33,9 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Welcome to Nine Dragon Labs Blog</h1>
-        {isLogin ? <CardWrapper /> : <RouteToLogin />}
+        <div className={isLogin ? "my-4" : "my-32"}>
+          {isLogin ? <CardWrapper /> : <RouteToLogin />}
+        </div>
       </main>
 
       <footer className={styles.footer}>

@@ -20,10 +20,18 @@ class Login extends React.Component<WithRouterProps> {
   handleSubmit = async (event) => {
     const { email, password } = this.state;
     event.preventDefault();
-    const { data, status } = await loginUser(email, password);
-    this.setState({ status: status });
-    sessionStorage.setItem("token", data.success.token);
-    console.log(data, status);
+    let datas;
+    let statuss;
+    try {
+      const { data, status } = await loginUser(email, password);
+      datas = data;
+      statuss = status;
+      sessionStorage.setItem("token", data.success.token);
+    } catch (error) {
+      statuss = 401;
+    }
+    this.setState({ data: datas, status: statuss });
+    console.log(datas, statuss);
   };
 
   render() {
@@ -31,6 +39,8 @@ class Login extends React.Component<WithRouterProps> {
 
     if (this.state.status === 200) {
       router.push("/");
+    } else if (this.state.status === 401) {
+      alert("Akun tidak memiliki akses!");
     }
 
     return (

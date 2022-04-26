@@ -20,14 +20,22 @@ class Register extends React.Component<WithRouterProps> {
   handleSubmit = async (event) => {
     const { email, name, password, c_password } = this.state;
     event.preventDefault();
-    const { data, status } = await registerUser(
-      name,
-      email,
-      password,
-      c_password
-    );
-    this.setState({ status: status });
-    sessionStorage.setItem("name", data.success.name);
+    let datas;
+    let statuss;
+    try {
+      const { data, status } = await registerUser(
+        name,
+        email,
+        password,
+        c_password
+      );
+      datas = data;
+      statuss = status;
+      sessionStorage.setItem("name", data.success.name);
+    } catch (error) {
+      statuss = 401;
+    }
+    this.setState({ status: statuss });
   };
 
   render() {
@@ -35,10 +43,12 @@ class Register extends React.Component<WithRouterProps> {
 
     if (this.state.status === 200) {
       router.push("/login");
+    } else if (this.state.status === 401) {
+      alert("Periksa kelengkapan data Anda!");
     }
 
     return (
-      <div className="register w-full h-screen bg-gradient-to-br from-blue-500 to bg-purple-900 text-white flex items-center">
+      <div className="register w-full h-screen bg-gradient-to-br from-blue-500 to bg-purple-900 text-white flex items-center overflow-auto">
         <div className="wrapper w-1/3 h-fit m-auto px-4">
           <h1 className="font-Chivo font-black text-3xl mb-10 text-center">
             Register
@@ -48,7 +58,7 @@ class Register extends React.Component<WithRouterProps> {
             className="font-Commisioner font-medium text-lg flex flex-col gap-4"
           >
             <div className="name bg-slate-400 rounded-lg flex gap-2 p-3 w-full items-center justify-between">
-              <label htmlFor="name" className="text-xl">
+              <label htmlFor="name" className="text-xl w-fit">
                 Name
               </label>
               <input
