@@ -11,10 +11,14 @@ class Login extends React.Component<WithRouterProps> {
     email: "",
     password: "",
     status: 0,
+    emailLabel: false,
+    passLabel: false,
   };
 
   handleChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
   };
 
   handleSubmit = async (event) => {
@@ -40,6 +44,7 @@ class Login extends React.Component<WithRouterProps> {
     if (this.state.status === 200) {
       router.push("/");
     } else if (this.state.status === 401) {
+      this.setState({ status: 0 });
       alert("Akun tidak memiliki akses!");
     }
 
@@ -53,7 +58,11 @@ class Login extends React.Component<WithRouterProps> {
             <div className="email bg-slate-400 rounded-lg flex gap-2 p-3 w-full items-center justify-between">
               <label
                 htmlFor="email"
-                className="font-Commisioner font-medium text-xl"
+                className={
+                  this.state.emailLabel
+                    ? "w-fit text-sm"
+                    : "font-Commisioner font-medium text-xl w-fit"
+                }
               >
                 Email
               </label>
@@ -61,7 +70,10 @@ class Login extends React.Component<WithRouterProps> {
                 type="email"
                 id="email"
                 name="email"
-                className="bg-transparent focus:outline-none"
+                className="bg-transparent focus:outline-none w-full"
+                onFocus={() => {
+                  this.setState({ emailLabel: !this.state.emailLabel });
+                }}
                 onChange={this.handleChange}
               />
               <FontAwesomeIcon icon={faUser} />
@@ -69,7 +81,11 @@ class Login extends React.Component<WithRouterProps> {
             <div className="password bg-slate-400 rounded-lg flex gap-2 p-3 w-full items-center justify-between">
               <label
                 htmlFor="password"
-                className="font-Commisioner font-medium text-xl"
+                className={
+                  this.state.passLabel
+                    ? "w-fit text-sm"
+                    : "font-Commisioner font-medium text-xl w-fit"
+                }
               >
                 Password
               </label>
@@ -77,8 +93,12 @@ class Login extends React.Component<WithRouterProps> {
                 type="password"
                 name="password"
                 id="password"
-                className="bg-transparent focus:outline-none"
+                className="bg-transparent focus:outline-none w-full"
                 onChange={this.handleChange}
+                required
+                onClick={() => {
+                  this.setState({ passLabel: !this.state.passLabel });
+                }}
               />
               <FontAwesomeIcon icon={faEyeSlash} />
             </div>

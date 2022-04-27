@@ -11,6 +11,10 @@ class Register extends React.Component<WithRouterProps> {
     password: "",
     c_password: "",
     status: 0,
+    emailfoc: false,
+    nameFoc: false,
+    pasFoc: false,
+    c_passFoc: false,
   };
 
   handleChange = (event) => {
@@ -44,6 +48,7 @@ class Register extends React.Component<WithRouterProps> {
     if (this.state.status === 200) {
       router.push("/login");
     } else if (this.state.status === 401) {
+      this.setState({ status: 0 });
       alert("Periksa kelengkapan data Anda!");
     }
 
@@ -58,7 +63,12 @@ class Register extends React.Component<WithRouterProps> {
             className="font-Commisioner font-medium text-lg flex flex-col gap-4"
           >
             <div className="name bg-slate-400 rounded-lg flex gap-2 p-3 w-full items-center justify-between">
-              <label htmlFor="name" className="text-xl w-fit">
+              <label
+                htmlFor="name"
+                className={
+                  this.state.nameFoc ? "text-sm w-fit" : "text-xl w-fit"
+                }
+              >
                 Name
               </label>
               <input
@@ -68,10 +78,18 @@ class Register extends React.Component<WithRouterProps> {
                 required
                 className="bg-transparent focus:outline-none w-full"
                 onChange={this.handleChange}
+                onClick={() => {
+                  this.setState({ nameFoc: !this.state.nameFoc });
+                }}
               />
             </div>
             <div className="email bg-slate-400 rounded-lg flex gap-2 p-3 w-full items-center justify-between">
-              <label htmlFor="email" className="text-xl">
+              <label
+                htmlFor="email"
+                className={
+                  this.state.emailfoc ? "text-sm w-fit" : "text-xl w-fit"
+                }
+              >
                 Email
               </label>
               <input
@@ -81,10 +99,18 @@ class Register extends React.Component<WithRouterProps> {
                 required
                 className="bg-transparent focus:outline-none w-full"
                 onChange={this.handleChange}
+                onClick={() => {
+                  this.setState({ emailfoc: !this.state.emailfoc });
+                }}
               />
             </div>
             <div className="password bg-slate-400 rounded-lg flex gap-2 p-3 w-full items-center justify-between">
-              <label htmlFor="password" className="text-xl">
+              <label
+                htmlFor="password"
+                className={
+                  this.state.pasFoc ? "text-sm w-fit" : "text-xl w-fit"
+                }
+              >
                 Password
               </label>
               <input
@@ -94,10 +120,18 @@ class Register extends React.Component<WithRouterProps> {
                 required
                 className="bg-transparent focus:outline-none w-full"
                 onChange={this.handleChange}
+                onClick={() => {
+                  this.setState({ pasFoc: !this.state.pasFoc });
+                }}
               />
             </div>
             <div className="confirm bg-slate-400 rounded-lg flex gap-2 p-3 w-full items-center justify-between">
-              <label htmlFor="c_password" className="text-xl">
+              <label
+                htmlFor="c_password"
+                className={
+                  this.state.c_passFoc ? "text-sm w-fit" : "text-xl w-fit"
+                }
+              >
                 Confirm Password
               </label>
               <input
@@ -107,6 +141,9 @@ class Register extends React.Component<WithRouterProps> {
                 required
                 className="bg-transparent focus:outline-none w-full"
                 onChange={this.handleChange}
+                onClick={() => {
+                  this.setState({ c_passFoc: !this.state.c_passFoc });
+                }}
               />
             </div>
             <button

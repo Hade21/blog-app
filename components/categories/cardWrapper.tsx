@@ -5,7 +5,7 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function CardWrapper() {
-  const [newCategory, setNewCategory] = useState({});
+  const [newCategory, setNewCategory] = useState();
   const res = getCategory();
   const [category, setCategory] = useState([]);
   const [status, setStatus] = useState(0);
@@ -22,15 +22,20 @@ export default function CardWrapper() {
   }, []);
 
   const handleChange = (event) => {
-    setNewCategory({ [event.target.name]: event.target.value });
+    setNewCategory(event.target.value);
     console.log(newCategory);
   };
 
-  const handleCreate = (event) => {
+  const handleCreate = async (event) => {
     event.preventDefault();
-    const add = createCategory(newCategory);
-    add.then((res) => console.log(res));
-    assign();
+    try {
+      const { success } = await createCategory({ name: newCategory });
+      if (success) {
+        assign();
+      }
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (
